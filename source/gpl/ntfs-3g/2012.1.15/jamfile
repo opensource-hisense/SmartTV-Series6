@@ -1,0 +1,26 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Tuxera NTFS-3G" ;
+NAME = ntfs-3g ;
+VERSION = 2012.1.15 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-lib" ;
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+# copy library & headers - only needed for non-static-builds. 
+# PUBLIBS = $(LIBFOLDER)"/libntfs-3g.so" ;
+# PUBLIBS += $(LIBFOLDER)"/libntfs-3g.so.83" ;
+# PUBLIBS += $(LIBFOLDER)"/libntfs-3g.so.83.0.0" ;
+# PUBINCFOLDERS = ntfs-3g ;
+
+# copy binaries
+CPFILES = $(BINFOLDER)"/mkntfs" ;
+CPFILES += $(BINFOLDER)"/ntfs-3g" ;
+CPFILES += $(BINFOLDER)"/ntfsfix" ;
+CPFILES $(CPFILES) : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

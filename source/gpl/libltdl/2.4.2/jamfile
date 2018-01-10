@@ -1,0 +1,21 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "libtool 2.4.2" ;
+NAME = libltdl ;
+VERSION = 2.4.2 ;
+TYPE = none ;
+
+PUBINCFOLDERS = . ;
+PUBINCFOLDERS += libltdl ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libltdl.a" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libltdl.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libltdl.so.7" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libltdl.so.7.3.0" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Subband Codec Library" ;
+NAME = sbc ;
+VERSION = 1.0.0 ;
+TYPE = lib ;
+LINK = static ;
+
+PUBINCFOLDERS = sbc ;
+
+CXXFLAGS += -fPIC ;
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;
+

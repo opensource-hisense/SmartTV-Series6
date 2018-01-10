@@ -1,0 +1,7 @@
+<Employee id = "id0001">
+        <Name>John</Name>
+        <Lastname>Smith</Lastname>
+        <Degree>34</Degree>
+        <Project>csoap</Project>
+        <Project>xsd2c</Project>
+</Employee>

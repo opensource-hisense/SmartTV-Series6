@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# This script is intended to be called from the simple IPv4 Link-Local
+# addressing tool writen by Arthur van Hoff (avh@strangeberry.com, see
+# <http://www.zeroconf.org/>)
+#
+# I ts usually invoked with:
+#   $1         = Reason for calling this script. One of <init|config|config>
+#   $interface = The interface name to work with.
+#   $ip        = The ip address that has been selected for that interface
+#                (only if reason is 'config')
+
+echo "IPv4LL Script:"
+echo "  Interface : $interface"
+echo "  Action    : $1"
+echo "  Address   : $ip"

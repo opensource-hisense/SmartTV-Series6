@@ -1,0 +1,24 @@
+<schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <complexType name="Person">
+   <attribute name="id" type="xs:string"/>
+   <sequence>
+      <element name="Name" type="xs:string"/>
+      <element name="Lastname" type="xs:string"/>
+      <element name="Degree" type="xs:int"/>
+      <element name="Project" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <element name="Address" type="Address" />
+    </sequence>
+  </complexType>
+
+  <complexType name="Address">
+   <sequence>
+      <element name="Street" type="xs:string"/>
+      <element name="StreetNum" type="xs:string"/>
+      <element name="Zip" type="xs:int"/>
+      <element name="City" type="xs:string"/>
+      <element name="Land" type="xs:string"/>
+    </sequence>
+  </complexType>
+
+</schema>

@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = libiconv ;
+NAME = libiconv ;
+VERSION = 1.9.2 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBINCFOLDERS = . ;
+PUBLIBS = [ glob $(LIBFOLDER:E="")"/*.*" ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

@@ -1,0 +1,20 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Tuxera NTFS-3G" ;
+NAME = ntfs-3g ;
+VERSION = 2013.1.13 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-lib" ;
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+# copy binaries
+CPFILES = $(BINFOLDER)"/mkntfs" ;
+CPFILES += $(BINFOLDER)"/ntfs-3g" ;
+CPFILES += $(BINFOLDER)"/ntfsfix" ;
+CPFILES $(CPFILES) : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

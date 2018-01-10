@@ -1,0 +1,85 @@
+#! /bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+includedir=@includedir@
+libdir=@libdir@
+relcsoap=@csoap_release@
+relnanohttp=@nanohttp_release@
+
+usage()
+{
+		cat <<EOF
+Usage: csoap-config [OPTION]
+
+Known values for OPTION are:
+
+  --prefix=DIR       change libcsoap prefix [default $prefix]
+  --exec-prefix=DIR  change libcsoap exec prefix [default $exec_prefix]
+  --libs             print library linking information
+  --cflags           print pre-processor and compiler flags
+  --help             display this help and exit
+  --version          output version information
+EOF
+
+		exit $1
+}
+
+if test $# -eq 0; then
+		usage 1
+fi
+
+cflags=false
+libs=false
+
+while test $# -gt 0; do
+		case "$1" in
+				-*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+				*) optarg= ;;
+		esac
+
+		case "$1" in
+		--prefix=*)
+			prefix=$optarg
+			includedir=$prefix/include
+			libdir=$prefix/lib
+			;;
+
+		--prefix)
+			echo $prefix
+			;;
+
+		--exec-prefix=*)
+			exec_prefix=$optarg
+			libdir=$exec_prefix/lib
+			;;
+
+		--exec-prefix)
+			echo $exec_prefix
+			;;
+
+		--version)
+			echo @csoap_major@.@csoap_minor@.@csoap_patch@
+			exit 0
+			;;
+
+		--help)
+			usage 0
+			;;
+
+		--cflags)
+			echo -I${includedir}/libcsoap-$relcsoap -I${includedir}/nanohttp-$relnanohttp @XML_CPPFLAGS@ @PTHREAD_CFLAGS@
+		 	;;
+
+		--libs)
+			echo -L${libdir} -lcsoap -lnanohttp @XML_LIBS@ @PTHREAD_LIBS@
+			;;
+		*)
+			usage
+			exit 1
+			;;
+		esac
+		shift
+done
+
+exit 0

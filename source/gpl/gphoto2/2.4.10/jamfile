@@ -1,0 +1,15 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Command line application for libgphoto2" ;
+NAME = gphoto2_app ;
+VERSION = 2.4.10 ;
+TYPE = none ;
+
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+CPFILES $(BINFOLDER)/gphoto2 : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

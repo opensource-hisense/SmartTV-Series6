@@ -1,0 +1,11 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "htop interactive process viewer" ;
+NAME = htop ;
+VERSION = 1.0.1 ;
+TYPE = none ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

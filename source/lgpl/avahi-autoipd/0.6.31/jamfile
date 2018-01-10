@@ -1,0 +1,15 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Avahi IPv4LL network address configuration daemon" ;
+NAME = avahi-autoipd ;
+VERSION = 0.6.31 ;
+TYPE = none ;
+
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+CPFILES $(BINFOLDER)/avahi-autoipd : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;
