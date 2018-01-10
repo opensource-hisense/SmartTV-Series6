@@ -1,0 +1,13 @@
+<schema>
+
+  <complexType name="Person">
+   <attribute name="id" type="xs:string"/>
+   <sequence>
+      <element name="Name" type="xs:string"/>
+      <element name="Lastname" type="xs:string"/>
+      <element name="Degree" type="xs:int"/>
+      <element name="Project" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+</schema>

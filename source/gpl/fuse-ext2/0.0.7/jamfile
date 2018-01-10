@@ -1,0 +1,17 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "EXT2 Filesystem support for FUSE" ;
+NAME = fuse-ext2 ;
+VERSION = 0.0.7 ;
+TYPE = none ;
+
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+# copy binaries
+CPFILES = $(BINFOLDER)"/fuse-ext2" ;
+CPFILES $(CPFILES) : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

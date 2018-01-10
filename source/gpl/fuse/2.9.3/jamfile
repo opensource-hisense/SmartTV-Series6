@@ -1,0 +1,24 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "FUSE File system in userspace" ;
+NAME = fuse ;
+VERSION = 2.9.3 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-lib" ;
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+# copy libraries & headers
+PUBLIBS += [ glob $(LIBFOLDER)/lib* ] ;
+PUBINCFOLDERS = . ;
+PUBINCFOLDERS += fuse ;
+
+# copy binaries
+CPFILES = $(BINFOLDER)"/fusermount" ;
+CPFILES += $(BINFOLDER)"/ulockmgr_server" ;
+CPFILES $(CPFILES) : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

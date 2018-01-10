@@ -1,0 +1,25 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "libjrtp 3.9.1" ;
+NAME = libjrtp ;
+VERSION = 3.9.1 ;
+TYPE = none ;
+
+if $(BUILDENV_DEVICE_VENDOR) = mstar {
+    LIBFOLDER = "arm-linux-lib.mstar" ;
+}
+else if $(BUILDENV_DEVICE_VENDOR) = hisi {
+    LIBFOLDER = "arm-linux-lib.hisi" ;
+}
+
+PUBINCFOLDERS = libjrtp ;
+#PUBINCDIRS = include/libjrtp ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libjrtp.a" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libjrtp.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libjrtp.so.3.9.1" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

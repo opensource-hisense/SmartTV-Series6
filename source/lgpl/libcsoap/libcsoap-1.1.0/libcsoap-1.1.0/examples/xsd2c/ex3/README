@@ -1,0 +1,41 @@
+##################################################
+#
+# PROJECT: xsd2c examples
+# CREATED: 02.04.2003
+# WRITTEN BY: Ferhat Ayaz
+#
+##################################################
+
+IMPORTANT: 
+
+	Please make sure that you understand the following examples:
+		+ ex1
+		+ ex2
+
+DESCRIPTION:
+
+	This example shows you how to derive from a base class.
+	In this example is 'Person' the base class and 'Customer'
+	is the derived class.
+
+
+FILES:
+
+	ex3.c    : Main program code
+	ex3.xsd  : XML Schema 
+	Makefile : The makefile
+	README   : This file
+
+
+	After you make the program with
+
+		$>make
+
+	the following c files will be generated:
+
+		+ Person_xsd.h
+		+ Person_xsd.c
+		+ Customer_xsd.h
+		+ Customer_xsd.c
+
+

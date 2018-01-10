@@ -1,0 +1,15 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "unix daemon tools library" ;
+NAME = libdaemon ;
+VERSION = 0.14 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")-$(TARGET_OS:E="")-lib ;
+PUBINCFOLDERS = libdaemon ;
+PUBLIBS += [ glob $(LIBFOLDER)/lib* ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

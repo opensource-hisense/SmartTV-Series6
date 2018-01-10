@@ -1,0 +1,19 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "oauth authentication library" ;
+NAME = liboauth ;
+VERSION = 0.8.8 ;
+TYPE = none ;
+
+PUBINCFOLDERS = oauth ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/liboauth.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/liboauth.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/liboauth.so.0.6.0" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

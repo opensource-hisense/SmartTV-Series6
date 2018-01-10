@@ -1,0 +1,603 @@
+
+<article>
+
+ <articleinfo>                                                
+  <title>cSOAP Implementation Guide $Revision: 254826 $</title>
+  <author><firstname>Ferhat</firstname><surname>Ayaz</surname></author>
+  <copyright><year>2004</year><holder>csoap</holder></copyright>
+ </articleinfo> 
+
+
+<section>
+<title>Introduction</title>
+
+<para>
+	This document shows in short examples how to use cSOAP 
+for the client and server side implementation.
+</para>
+
+<para>
+  cSOAP is a simple client/server SOAP library to implement standalone
+and embedded SOAP applications. cSOAP was implemented in pure C to 
+support platforms as far as possible. 
+</para>
+
+<para>
+  The underlying xml layer is libxml2 (http://xmlsoft.org). We used 
+this library because it is fast and still maintained. You can find also
+some documentations about using libxml2. 
+</para>
+
+<para>
+  The transport of SOAP messages will be established via HTTP. cSOAP 
+contains the subproject "nanohttp" which will do all the HTTP specific 
+stuff. It implements a simple HTTP client and a server which can also 
+be used outside the cSOAP project. 
+</para>
+
+</section>
+
+<section>
+<title>Nameconvention in cSOAP</title>
+
+<para>
+  cSOAP contains the following simple modules:
+</para>
+
+<synopsis>
+    + client    : soap-client.h
+    + server    : soap-server.h
+    + ctx       : soap-ctx.h
+    + env       : soap-env.h
+    + fault     : soap-fault.h
+    + router    : soap-router.h
+    + service   : soap-service.h
+</synopsis>
+
+<para>
+  Each module declares the functions in the following name convention:
+</para>
+
+<synopsis><![CDATA[
+    herror_t soap_<module>_<operation>();
+]]></synopsis>
+
+
+<para>
+  For example: The function to invoke a SOAP call from the client side:
+</para>
+
+<synopsis>
+    herror_t soap_client_invoke(....);
+</synopsis>
+
+</section>
+
+<section>
+<title>Error handling</title>
+
+<para>
+   Almost all function will return a "herror_t" object. If the function 
+returns with success this object is H_OK. Another herror_t object 
+will be returned otherwise. Following functions can be used with a
+returned herror_t object:
+</para>
+
+<synopsis>
+  herror_code()    : Returns the error code
+  herror_func()    : Returns the function name, where the error occured
+  herror_message() : Returns the human readable error message   
+  herror_release() : Frees the herror_t object.
+</synopsis>
+
+<example>
+<programlisting>
+
+  herror_t err  = soap_client_invoke(...);
+  if (err != H_OK) {
+    printf("Message: %s\n", herror_message(err));
+    printf("Error code: %d\n", herror_code(err));
+    printf("In function: %s\n", herror_func(err));
+    herror_release(err);
+  }
+</programlisting>
+</example>
+
+<note>
+  Note that you "must" call herror_release() to free the resources.
+</note>
+
+<note>
+  The error codes are defined in "nanohttp-common.h". Here some examples:
+</note>
+
+<synopsis>
+
+#define HSOCKET_ERROR_CREATE 1001
+#define URL_ERROR_UNKNOWN_PROTOCOL 1101
+#define XML_ERROR_PARSE 1601
+
+</synopsis>
+
+
+
+<para>
+You can also create your own herror_t object with herror_new().
+</para>
+
+<synopsis>
+#define MY_ERROR_TEST 5001
+
+herror_t err = herror_new("my_func()", 
+                MY_ERROR_TEST, 
+                "Size %d is greater then %d", 17, 13);
+</synopsis>
+
+<note>
+  User defined error codes must be greater then 5000.
+</note>
+
+</section>
+
+<section>
+<title>Implementing a simple client</title>
+
+<para>
+  One of the advantages of cSOAP is its simplicity. You can implement
+a client or a server in a few minutes. The steps are always indentical.
+</para>
+
+<synopsis>
+1. Initialize cSOAP client
+      soap_client_init_args()
+
+2. Create a SoapCtx object
+      soap_ctx_new_with_method()
+
+3. Fill the envelope
+      soap_env_add_item()
+      soap_env_add_itemf()
+      soap_env_add_attachment()
+      soap_env_add_custom()
+      soap_env_push_item()
+      soap_env_pop_item()
+
+4. Invoke 
+      soap_client_invoke()
+
+5. Process returned SoapCtx object
+6. Clean up cSOAP client       
+</synopsis>
+
+<example>
+<programlisting><![CDATA[
+#include <libcsoap/soap-client.h>
+
+
+static const char *url = "http://localhost:10000/csoapserver";
+static const char *urn = "urn:examples";
+static const char *method = "sayHello";
+
+
+int main(int argc, char *argv[])
+{
+  SoapCtx *ctx, *ctx2;
+  herror_t err;
+ 
+  /* 1. Initialize cSOAP client */
+  soap_client_init_args(argc, argv);
+  
+  /* 2. Create a SoapCtx object */
+  soap_ctx_new_with_method(urn, method, &ctx);
+
+  /* 3. Fill the envelope */
+  soap_env_add_item(ctx->env, "xsd:string", "name", "Jonny B. Good");
+  
+  /* 4. Invoke  */
+  soap_client_invoke(ctx, &ctx2, url, "");
+  if (err != H_OK) {
+
+    log_error4("[%d] %s(): %s ", 
+        herror_code(err), 
+        herror_func(err), 
+        herror_message(err));
+
+    herror_release(err);
+    soap_ctx_free(ctx);
+    return 1;
+  }
+
+  /* 5. Process returned SoapCtx object  */
+  soap_xml_doc_print(ctx2->env->root->doc);
+
+
+  /* 6. Clean up cSOAP client  */
+  soap_ctx_free(ctx2);
+  soap_ctx_free(ctx);
+
+  soap_client_destroy();
+
+  return 0;
+}
+]]>
+</programlisting>
+</example>
+
+<note>
+  Important: Note that we have omitted error handling. The complete
+code can be found under examples/csoap/simpleclient.c 
+</note>
+
+</section>
+
+<section>
+<title>Implementing a simple server</title>
+
+<para>
+  Before you start to implement a SOAP server, you must understand
+the architecture how you publish you web service . 
+</para>
+
+<synopsis>
+  * Each URL represent a router service.
+  * Each router service contains one or more user services.
+  * Each user service is a C function with the following signature:
+    
+    typedef herror_t (*SoapServiceFunc)(SoapCtx*, SoapCtx*);      
+</synopsis>
+
+<para>
+    The first SoapCtx object is the request, the second SoapCtx object
+is the response, which must be filled by the service function 
+"SoapServiceFunc". The function must return H_OK if success. 
+</para>
+
+<para>
+The steps to implement a SOAP server described below:
+</para>
+
+<synopsis>
+1. Init cSOAP server
+2. Create and register a router
+3. Register you service (C function)
+4. Enter server loop
+5. Clean up cSOAP server
+</synopsis>
+
+
+<para>
+The above steps can be shown in the the following example:
+</para>
+
+
+<example>
+<programlisting><![CDATA[
+
+herror_t say_hello(SoapCtx *req, SoapCtx* res)
+{
+  printf("Returning empty envelope\n");
+  soap_env_new_with_response(req->env, &res->env);
+  return H_OK;
+}
+
+
+int main(int argc, char *argv[])
+{
+
+  herror_t err;
+  SoapRouter *router;
+
+  /* 1. Init cSOAP server */
+  soap_server_init_args(argc, argv);
+  
+  /* 2. Create and register a router */
+  router = soap_router_new();
+  soap_server_register_router(router, url);
+
+  /* 3. Register you service (C function) */
+  soap_router_register_service(router, say_hello, method, urn);
+
+  /* 4. Enter server loop */
+  soap_server_run();
+
+  /* 5. Clean up cSOAP server */
+  soap_server_destroy();
+
+  return 0;
+}
+]]></programlisting>
+</example>
+
+<para>
+  You can see how to implement a soap server easily!
+</para>
+
+<note>
+  Important: Note that we have omitted error handling. The complete
+code can be found under examples/csoap/simpleserver.c 
+</note>
+
+</section>
+
+<section>
+<title>Implementing a simple client with attachment</title>
+
+<para>
+  File are added to the context using soap_ctx_add_file(). 
+  The following example is a little bit modified version of the above 
+simpleclient example.
+</para>
+
+
+<example>
+<programlisting><![CDATA[
+int main(int argc, char *argv[])
+{
+  SoapCtx *ctx, *ctx2;
+  char href[MAX_HREF_SIZE];
+  xmlNodePtr fault;
+
+  /* Initialize soap client */
+  soap_client_init_args(argc, argv);
+
+  /* Create a context object */
+  soap_ctx_new_with_method(urn, method, &ctx);
+	
+  /* Add file to the context */
+	soap_ctx_add_file(ctx, argv[1], "application/octet-stream", href);
+
+	/* Add file reference to the envelope */
+  soap_env_add_attachment(ctx->env,"source", href);
+
+  /* Send soap request to the server */
+  soap_client_invoke(ctx, &ctx2, url, "");
+
+  /* Handle response (just print to the screen)  */
+  fault = soap_env_get_fault(ctx2->env);
+  if (fault) {
+    ... 
+  } else {
+    ...
+  }
+
+  /* Clean up */
+  soap_ctx_free(ctx2);
+  soap_ctx_free(ctx);
+
+  soap_client_destroy();
+
+  return 0;
+}
+
+]]></programlisting>
+</example>
+
+<para>
+The difference between soap_ctx_add_file() and soap_env_add_attachment()
+is, that soap_ctx_add_file() adds the file to the context. In our case,
+this is a MIME message. soap_ctx_add_file() fills the "href" field with
+a generated reference id. (Content-ID: [href]) This id can be used to 
+point to the added file from a SOAP message using soap_env_add_attachment().
+</para>
+
+<para>
+Here a simple example to understand. Look at the following MIME message:
+</para>
+
+<example>
+<programlisting><![CDATA[
+
+POST /csoapsever HTTP/1.1
+Content-type: multipart/related; boundary="--.Part1234" ...
+
+----.Part1234
+<SOAP-ENV:Envelope ...>
+ <SOAP-ENV:Body ...>
+  <m:echo xmlns:m="urn:example">
+    <source href="cid:12345abcdef/>
+  </m:echo>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+----.Part1234
+Content-type: apptication/octet-stream
+Content-ID: <12345abcdef>
+
+binary data ...
+
+----.Part1234--
+
+]]></programlisting>
+</example>
+
+<para>
+soap_env_add_attachment() will produce the following xml tag:
+</para>
+
+<synopsis>
+<![CDATA[
+  <source href="cid:12345abcdef/>
+]]>
+</synopsis>
+
+
+</section>
+
+<section>
+<title>Implementing a simple server with attachment</title>
+
+
+<para>
+  Attachments are represented as an "attachments_t" object.  An
+"attachments_t" object is a list of parts. A part is the physical file
+on the filesystem. 
+</para>
+
+<synopsis>
+typedef struct _attachments
+{
+  part_t *parts;
+  part_t *last;
+  part_t *root_part;
+}attachments_t;
+</synopsis>
+
+<para>
+  You don't have to care about this object becaus it is a part of 
+SoapCtx.
+</para>
+
+<synopsis>
+typedef struct _SoapCtx
+{
+  SoapEnv *env;
+  attachments_t *attachments;
+}SoapCtx;
+</synopsis>
+
+
+<para>
+The following example shows how to use attachment in a service function 
+(C function). 
+</para>
+
+
+<example>
+<programlisting><![CDATA[
+herror_t echo_attachments(SoapCtx *req, SoapCtx* res)
+{
+  herror_t err;
+
+  part_t *part;
+  char href[MAX_HREF_SIZE];
+
+  err = soap_env_new_with_response(req->env, &res->env);
+  if (err != H_OK) {
+	  return err;
+  }
+
+  if (req->attachments) 
+  {
+	for (part = req->attachments->parts; part != NULL; part = part->next) 
+	{
+      soap_ctx_add_file(res, part->filename, part->content_type, href);
+      soap_env_add_attachment(res->env, "echoFile", href);
+    }
+  }
+    
+  return H_OK;
+}
+]]></programlisting>
+</example>
+
+</section>
+
+<section>
+<title>Building an envelope using the libxml2 API</title>
+
+<para>
+One of the ways building a xml tree into an SOAP envelope is to use 
+directly the libxml2 API. You can obtain the xmlNodePtr of an envelope 
+using the SoapEnv structure.
+</para>
+
+<synopsis>
+typedef struct _SoapEnv
+{ 
+  xmlNodePtr root; 
+  xmlNodePtr cur;
+}SoapEnv;
+</synopsis>
+
+<para>
+Here is "root" your xml node to <![CDATA[ <SOAP-ENV:Envelope> ]]>.
+</para>
+
+</section>
+
+<section>
+<title>Building an envelope using envelope functions</title>
+
+<para>
+You can build a xml tree using following functions
+</para>
+
+<synopsis>
+xmlNodePtr 
+soap_env_add_item(SoapEnv* env, const char *type, 
+		  const char *name, const char *value);
+
+xmlNodePtr 
+soap_env_add_itemf(SoapEnv* env, const char *type, 
+		  const char *name, const char *value, ...);
+
+xmlNodePtr 
+soap_env_push_item(SoapEnv *env, const char *type,
+		   const char *name);
+
+void
+soap_env_pop_item(SoapEnv* env);
+</synopsis>
+
+<para>
+soap_env_add_itemf() does the same thing like soap_env_add_item() 
+but with a C style argument list. (Max buffer for value is 1054)
+</para>
+
+<para>
+The next example shows, how to use the stack pattern of cSOAP.
+</para>
+
+<example>
+<programlisting><![CDATA[
+
+SoapEnv *env = ctx->env;
+
+soap_env_push_item(env, "my:user", "User");
+ soap_env_add_item(env, "xsd:string", "id", "09189");
+ soap_env_push_item(env, "my:adress", "Adress");
+  soap_env_add_item(env, "xsd:string", "City", "MyCity");
+  soap_env_add_item(env, "xsd:int", "Zip", "%d", 12456);
+ soap_env_pop_item(env);
+ soap_env_add_item(env, "xsd:string", "name", "snowdrop");
+ soap_env_add_item(env, "xsd:string", "passwd", "passphrase64");
+soap_env_pop_item(env);
+
+]]></programlisting>
+</example>
+
+
+<para>
+This will create the following xml structure
+</para>
+
+
+<example>
+<programlisting><![CDATA[
+<SOAP-ENV:Envelope  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+        xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance" 
+        xmlns:xsd="http://www.w3.org/1999/XMLSchema" 
+        SOAP-ENV:encoding="http://schemas.xmlsoap.org/soap/encoding/"> 
+  
+  <SOAP-ENV:Body>  
+    <m:CreateUser xmlns:m="urn:examples">  
+      <User type="my:user">
+        <id type="xsd:string">09189</id>
+        <Adress type="my:adress">
+         <City type="my:adress">MyCity</City>
+         <Zip type="xsd:int">12456</Zip>
+        </Adress>
+        <name type="xsd:string">snowdrop</name>
+        <passwd type="xsd:string">passphrase64</passwd>
+      </User>
+    </m:CreateUser> 
+  </SOAP-ENV:Body>
+
+</SOAP-ENV:Envelope>
+
+]]></programlisting>
+</example>
+
+</section>
+
+</article>

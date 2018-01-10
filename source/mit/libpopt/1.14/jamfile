@@ -1,0 +1,19 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Command line parser" ;
+NAME = libpopt ;
+VERSION = 1.14 ;
+TYPE = none ;
+
+PUBINCFOLDERS = . ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libpopt.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libpopt.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libpopt.so.0.0.0" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

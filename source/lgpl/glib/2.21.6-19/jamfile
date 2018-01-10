@@ -1,0 +1,31 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "glib component library" ;
+NAME = glib ;
+VERSION = 2.21.6-19 ;
+TYPE = none ;
+
+PUBINCFOLDERS = . ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libgio-2.0.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgio-2.0.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgio-2.0.so.0.2106.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libglib-2.0.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libglib-2.0.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libglib-2.0.so.0.2106.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgmodule-2.0.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgmodule-2.0.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgmodule-2.0.so.0.2106.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgobject-2.0.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgobject-2.0.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgobject-2.0.so.0.2106.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgthread-2.0.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgthread-2.0.so.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgthread-2.0.so.0.2106.0" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

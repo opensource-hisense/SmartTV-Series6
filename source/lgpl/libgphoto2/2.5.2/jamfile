@@ -1,0 +1,29 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Photo camera access library" ;
+NAME = libgphoto2 ;
+VERSION = 2.5.2 ;
+TYPE = none ;
+
+PUBINCDIRS = include ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libgphoto2.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgphoto2.so.6" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgphoto2.so.6.0.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgphoto2_port.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgphoto2_port.so.10" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libgphoto2_port.so.10.1.1" ;
+
+# copy library sub-folders recursively
+CPDIRS $(LIBFOLDER)/libgphoto2 $(LIBFOLDER)/libgphoto2_port : loewe/lib : $(LIBFOLDER) ;
+
+LIBS += ltdl ;
+LIBS += usb ;
+LIBS += usb-1.0 ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

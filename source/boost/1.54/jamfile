@@ -1,0 +1,59 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+LONGNAME = "boost header" ;
+NAME = boost ;
+VERSION = 1.54 ;
+TYPE = none ;
+NODOC = YES ;
+
+PUBINCDIRS = include ;
+
+if $(BUILDENV_DEVICE_VENDOR) = mstar {
+    LIBFOLDER = "arm-linux-lib.mstar" ;
+}
+else if $(BUILDENV_DEVICE_VENDOR) = hisi {
+    LIBFOLDER = "arm-linux-lib.hisi" ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_zlib.*" ] ;
+}
+
+#if $(ENABLE_CHECKED_STL) = 1 
+#{
+#    LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-checked-lib" ;
+#}
+#else
+#{
+#    LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+#}
+
+if $(TARGET_OS) = winnt-msvc
+{
+    LIBFOLDER = $(TARGET_OS:E="")"-lib" ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/boost_system.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/boost_date_time.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/boost_thread.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/boost_filesystem.*" ] ;
+}
+else
+{
+    # PUBLIBS = [ glob $(LIBFOLDER:E="")"/lib*" ] ;
+    PUBLIBS += $(LIBFOLDER:E="")"/libboost_test_exec_monitor.a" ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_unit_test_framework.so*" ] ;
+
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_signals.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_system.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_date_time.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_thread.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_atomic.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_iostreams.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_filesystem.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_serialization.*" ] ;
+    PUBLIBS += [ glob $(LIBFOLDER:E="")"/libboost_regex.*" ] ;
+}
+
+if $(PROJECTVARIANT) != "host" {
+    LINSTALLDIR = $(INSTALLROOT)/loewe/lib ;
+}
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

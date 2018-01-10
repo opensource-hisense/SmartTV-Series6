@@ -1,0 +1,12 @@
+To rebuild the library for your platform, follow these steps:
+
+cd ./<platform>/build
+./configure.sh
+make install
+cd ../..
+make install
+
+This will first install the new library to the ./<platform>/usr directory and
+in the second step copy it from there to the platform specific global installation
+directory named by $COMPENV_INSTALLDIR.
+

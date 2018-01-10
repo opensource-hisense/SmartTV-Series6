@@ -1,0 +1,23 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = FreeType2 ;
+NAME = freetype ;
+VERSION = 2.4.2 ;
+TYPE = none ;
+
+# INCDIRS += ../include/freetype ;
+PUBINCS = include/ft2build.h ;
+PUBINCFOLDERS = freetype freetype/config ;
+if $(TARGET_OS) = linux
+{
+    PUBLIBS += lib/libfreetype_stlinux.a ;
+}
+else
+{
+    PUBLIBS += lib/libfreetype.a ;
+}
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

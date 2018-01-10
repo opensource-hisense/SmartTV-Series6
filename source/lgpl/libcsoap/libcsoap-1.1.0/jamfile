@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "csoap library" ;
+NAME = libcsoap ;
+VERSION = 1.1.0 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")-$(TARGET_OS:E="")-libs ;
+PUBINCFOLDERS = nanohttp libcsoap ;
+INCDIRS += include/nanohttp-1.1 include/libcsoap-1.1 ;
+PUBLIBS += [ glob $(LIBFOLDER)/lib* ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

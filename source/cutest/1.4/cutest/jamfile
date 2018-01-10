@@ -1,0 +1,20 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# 
+# C Unit Test Library 
+# 
+# ## Module settings ###
+LONGNAME = cutest ;
+NAME = cutest ;
+VERSION = 0.1.0 ;
+TYPE = lib ;
+
+WARNFLAGS = -W -Wall ;
+
+DEFINES += DPRLEVEL=4000 ;
+
+PUBINCFOLDERS = cutest ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

@@ -1,0 +1,210 @@
+
+
+<article>
+
+
+
+ <articleinfo>                                                
+  <title>How to compile cSOAP</title>
+  <author><firstname>Ferhat</firstname><surname>Ayaz</surname></author>
+  <copyright><year>2005</year><holder>csoap</holder></copyright>
+ </articleinfo> 
+
+
+
+
+
+<section>
+<title>Introduction</title>
+
+
+<para>
+	This document shows in short examples how to compile cSOAP 
+under *nix systems.
+</para>
+
+
+
+<para>
+  cSOAP is implemented in ANSI C. So it should be possible to compile it with 
+every ANSI C conform compiler. If you can not compile it with your compiler,
+please post it to the mailinglist, so we can alter neccessary code or Makefiles.
+</para>
+
+
+
+</section>
+
+
+
+<section>
+
+<title>Dependecies</title>
+
+
+<para>
+	cSOAP depends on libxml2 and pkg-config tool.
+</para>
+
+
+
+<synopsis>
+    + libxml2      : http://xmlsoft.org
+    + pkg-config   : http://pkgconfig.freedesktop.org/wiki/
+</synopsis>
+
+</section>
+
+
+
+<section>
+
+<title>Build libxml2</title>
+
+
+
+<para>
+	First you must build the libxml2 library. You can test if you have this library 
+on your system by typing xml2-config in a command prompt.
+</para>
+
+<synopsis><![CDATA[
+
+$ xml2-config
+Usage: xml2-config [OPTION]
+
+Known values for OPTION are:
+
+  --prefix=DIR          change libxml prefix [default /usr]
+  --libs                print library linking information
+  --cflags              print pre-processor and compiler flags
+  --help                display this help and exit
+  --version             output version information
+
+]]></synopsis>
+
+
+<para>
+	Otherwise download the latest sourcecode form http://xmlsoft.org. lets say you downloaded
+<filename>libxml2-[version].tar.gz</filename> into you build directory.
+</para>
+
+<synopsis><![CDATA[
+
+$tar zxvf libxml2-[version].tar.gz
+$cd libxml2-[version]
+$./configure --prefix=$LIBXMLDIST
+$make
+$make install
+
+]]></synopsis>
+
+<para>
+	where $LIBXMLDIST is your directory where you want to install libxml2 (usually /usr or /usr/local). 
+Replace it with your pathname.
+</para>
+
+
+</section>
+
+
+
+<section>
+
+<title>Build cSOAP</title>
+
+
+<para>
+	At this time we assume that you have pkg-config and libxml2 installed properly on you system.
+	To check if you have pkg-config, just type "pkg-config" in a command prompt.
+</para>
+
+
+<synopsis><![CDATA[
+
+$pkg-config
+Must specify package names on the command line
+
+]]></synopsis>
+
+<para>Otherwise got to http://pkgconfig.freedesktop.org/wiki/ and folow the instructions</para>
+
+<para>
+Now we must download the latest cSOAP package into the build directory.
+Goto "http://sourceforge.net/project/showfiles.php?group_id=74977" (or click just the download menu item)
+and download the latest cSOAP package. Lets say libsoap-[version].tar.gz.
+</para>
+
+
+<synopsis><![CDATA[
+
+$tar zxvf libsoap-[version].tar.gz
+$cd libsoap-[version]
+$./configure --prefix=$LIBSOAPDIST --with-libxml-prefix=$LIBXMLDIST
+$make
+$make install
+
+]]></synopsis>
+
+
+<para>
+	where $LIBSOAPDIST is your directory where you want to install libsoap (usually /usr or /usr/local) and
+	$LIBXMLDIST is the directory where you installed libxml2 (see section "Build libxml2"). Replace this
+variables with your pathnames.
+</para>
+
+</section>
+
+
+
+<section>
+
+<title>I'm in hurry. Show me all at once</title>
+
+<para>
+Ok. Here is a script which will download, compile and install csoap and libxml2.
+</para>
+
+
+
+<synopsis><![CDATA[
+
+#-----------------------------------------------------------
+#!/bin/sh
+
+# Alter this variables for your installation directory
+LIBSOAPDIST=/usr/local
+LIBXMLDIST=/usr/local
+
+# Download and install libxml2
+
+wget ftp://ftp.xmlsoft.org/libxml2-2.6.20.tar.gz
+tar zxvf libxml2-2.6.20.tar.gz 
+cd libxml2-2.6.20
+./configure --prefix=$LIBXMLDIST
+make
+make install
+cd ..
+
+# Download and install cSOAP
+
+wget http://kent.dl.sourceforge.net/sourceforge/csoap/libsoap-1.0.3.tar.gz
+tar zxvf libsoap-1.0.3.tar.gz
+cd libsoap-1.0.3
+./configure --prefix=$LIBSOAPDIST --with-libxml-prefix=$LIBXMLDIST
+make
+make install
+
+#-----------------------------------------------------------
+
+
+]]></synopsis>
+
+
+
+</section>
+
+
+
+</article>
+

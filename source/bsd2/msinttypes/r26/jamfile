@@ -1,0 +1,21 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "inttype headers for MSVC (msinttypes)" ;
+NAME = msinttypes ;
+VERSION = 0.26 ;
+TYPE = none ;
+
+LIBFOLDER =  ;
+
+if $(TARGET_OS) = winnt-msvc
+{
+    PUBINCDIRS += include ;
+}
+else
+{
+}
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

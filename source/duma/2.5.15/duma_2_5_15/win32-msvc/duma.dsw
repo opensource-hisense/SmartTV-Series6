@@ -1,0 +1,158 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "createconf"=".\createconf\createconf.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "dumadetours"=".\dumadetours\dumadetours.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "dumadetoursdll"=".\dumadetoursdll\dumadetoursdll.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dumadll"=".\dumadll\dumadll.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dumalib"=".\dumalib\dumalib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name stacktrace
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dumatest"=".\dumatest\dumatest.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dumatestpp"=".\dumatestpp\dumatestpp.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "stacktrace"=".\stacktrace\stacktrace.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "testoperators"=".\testoperators\testoperators.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tstheap"=".\tstheap\tstheap.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name dumalib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

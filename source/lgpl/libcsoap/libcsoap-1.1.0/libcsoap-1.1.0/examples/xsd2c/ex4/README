@@ -1,0 +1,37 @@
+##################################################
+#
+# PROJECT: xsd2c examples
+# CREATED: 27.05.2004
+# WRITTEN BY: Ferhat Ayaz
+#
+##################################################
+
+
+DESCRIPTION:
+
+	This example uses a simple comlexType (Person)
+	to show you how to:
+
+		+ deserialize
+
+	a xsd object in c
+
+
+FILES:
+
+	ex4.c    : Main program code
+	ex4.xsd  : XML Schema 
+	Makefile : The makefile
+	README   : This file
+
+
+	After you make the program with
+
+		$>make
+
+	the following c files will be generated:
+
+		+ Person_xsd.h
+		+ Person_xsd.c
+
+

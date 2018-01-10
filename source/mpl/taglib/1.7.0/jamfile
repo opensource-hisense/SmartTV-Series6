@@ -1,0 +1,22 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "taglib for audio and video" ;
+NAME = taglib ;
+VERSION = 1.7.0 ;
+TYPE = none ;
+
+PUBINCFOLDERS = taglib ;
+
+if $(BUILDENV_DEVICE_VENDOR) = mstar {
+    LIBFOLDER = "arm-linux-lib.mstar" ;
+}
+else if $(BUILDENV_DEVICE_VENDOR) = hisi {
+    LIBFOLDER = "arm-linux-lib.hisi" ;
+}
+
+PUBLIBS = [ glob $(LIBFOLDER:E="")"/libtag.so*" ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

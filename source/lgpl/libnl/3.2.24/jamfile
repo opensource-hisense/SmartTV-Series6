@@ -1,0 +1,37 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "Netlink Protocol Library Suite" ;
+NAME = libnl ;
+VERSION = 3.2.24 ;
+TYPE = none ;
+
+PUBINCDIRS = include ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libnl-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-3.so.200.19.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-cli-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-cli-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-cli-3.so.200.19.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-genl-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-genl-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-genl-3.so.200.19.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-idiag-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-idiag-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-idiag-3.so.200.19.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-nf-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-nf-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-nf-3.so.200.19.0" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-route-3.so" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-route-3.so.200" ;
+PUBLIBS += $(LIBFOLDER:E="")"/libnl-route-3.so.200.19.0" ;
+
+# copy library sub-folders recursively
+# CPDIRS $(LIBFOLDER)/libnl : loewe/lib : $(LIBFOLDER) ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

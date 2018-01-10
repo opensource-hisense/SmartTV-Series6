@@ -1,0 +1,18 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# module configuration
+LONGNAME = "Simple IPv4 Link-Local addressing tool" ;
+NAME = avh-ipv4ll ;
+VERSION = 0.0.1 ;
+TYPE = exe ;
+
+linux-libs = pthread rt ;
+
+DEPENDS = csp-osal-platform-headers ;
+
+## Complex libs ##
+LIBS += $($(TARGET_OS:E="")"-libs") ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

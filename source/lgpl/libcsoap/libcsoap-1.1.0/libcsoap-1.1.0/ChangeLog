@@ -1,0 +1,54 @@
+2006/03/06
+  - build system cleanup
+    - "make dist" is working now
+    - libcsoap.m4 will be installed
+    - configure.ac cleanup
+      - using libxml2.m4 macro for libxml2 detection
+      - CFLAGS fixes for Solaris2.8 (-D_REENTRANT)
+
+- nanohttp-ssl cleanup
+  - SSL related code moved to nanohttp-{ssl,socket}
+  - removed all (un-)blocking related stuff
+  - #ifdef HAVE_SSL in hsocket_t removed
+  - HAVE_SSL is now in config.h via ./configure
+
+- nanohttp conndata_t race condition fixed
+
+2004/11/03
+	Added MIME support. (attachments). Implemented stream objects
+	to receive and send HTTP data. Added some new objects 
+	content-type attachements_t part_t. Added SoapCtx object.
+2004/09/13
+	fixed SIGTERM to work for Windows
+	Michael Rans
+2004/09/04
+	made HTTP server multithreaded, so it can handle multiple connections
+	Michael Rans
+2004/08/27
+	made Windows port of libsoap
+	Michael Rans
+2004/06/02
+	xsd2c is now a part of the csoap projects "libsoap/xsd2c/"
+	Examples are under "libsoap/examples/xsd2c"
+	Ferhat Ayaz
+2004/05/18
+	Added command line argument support for "-NHTTPtsig <signal>".
+	This defines  the termination signal handler value.
+	Example :
+	  ./myserver -NHTTPtsig 2
+	will shutdown nano http properly by pressing ctrl-c (SIGINT = 2).
+	Ferhat Ayaz
+	  
+2004/04/14
+	added content-type text/xml as default in  soap_client_invoke()
+	Ferhat Ayaz
+
+2004/03/26 
+	creates detached threads (depending on problem under Redhat 9), thanks
+	Menzo Windhouwer
+
+2004/03/26
+	gracefully terminate HTTP server, added SIGTERM signal handler, thanks
+	Menzo Windhouwer
+
+	

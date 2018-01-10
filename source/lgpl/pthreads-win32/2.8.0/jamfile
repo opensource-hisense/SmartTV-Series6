@@ -1,0 +1,18 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "pthreads-win32 library" ;
+NAME = pthreads-win32 ;
+VERSION = 2.8.0 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBINCFOLDERS = . ;
+
+# Only copy the GCE2 libs for MinGW and the VSE2 for MSVC
+PUBLIBS = [ glob $(LIBFOLDER:E="")"/*.*" ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

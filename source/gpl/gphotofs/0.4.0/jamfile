@@ -1,0 +1,15 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "user space file system for libgphoto2" ;
+NAME = gphotofs ;
+VERSION = 0.4.0 ;
+TYPE = none ;
+
+BINFOLDER = $(TARGET_MACHINE)"-"$(TARGET_OS)"-bin" ;
+
+CPFILES $(BINFOLDER)/gphotofs : loewe/bin ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

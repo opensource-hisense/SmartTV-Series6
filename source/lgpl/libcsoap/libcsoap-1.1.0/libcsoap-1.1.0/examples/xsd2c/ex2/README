@@ -1,0 +1,40 @@
+##################################################
+#
+# PROJECT: xsd2c examples
+# CREATED: 30.03.2003
+# WRITTEN BY: Ferhat Ayaz
+#
+##################################################
+
+IMPORTANT: 
+
+	Please make sure that you understand the following examples:
+		+ ex1
+
+DESCRIPTION:
+
+	This example uses 2 simple comlexTypes (Person, Address)
+	to show you how to:
+
+		+ set other complexTypes in complexTypes
+
+FILES:
+
+	ex2.c    : Main program code
+	ex2.xsd  : XML Schema 
+	Makefile : The makefile
+	README   : This file
+
+
+	After you make the program with
+
+		$>make
+
+	the following c files will be generated:
+
+		+ Person_xsd.h
+		+ Person_xsd.c
+		+ Address_xsd.h
+		+ Address_xsd.c
+
+
