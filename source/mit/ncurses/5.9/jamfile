@@ -1,0 +1,13 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "ncurses System V R4 curses emulation library" ;
+NAME = ncurses ;
+VERSION = 5.9 ;
+TYPE = none ;
+
+PUBINCFOLDERS = . ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

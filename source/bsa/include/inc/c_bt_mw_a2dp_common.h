@@ -1,0 +1,72 @@
+/********************************************************************************************
+ *     LEGAL DISCLAIMER
+ *
+ *     (Header of MediaTek Software/Firmware Release or Documentation)
+ *
+ *     BY OPENING OR USING THIS FILE, BUYER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
+ *     THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE") RECEIVED
+ *     FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO BUYER ON AN "AS-IS" BASIS
+ *     ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL WARRANTIES, EXPRESS OR IMPLIED,
+ *     INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+ *     A PARTICULAR PURPOSE OR NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY
+ *     WHATSOEVER WITH RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
+ *     INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND BUYER AGREES TO LOOK
+ *     ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO. MEDIATEK SHALL ALSO
+ *     NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE RELEASES MADE TO BUYER'S SPECIFICATION
+ *     OR TO CONFORM TO A PARTICULAR STANDARD OR OPEN FORUM.
+ *
+ *     BUYER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S ENTIRE AND CUMULATIVE LIABILITY WITH
+ *     RESPECT TO THE MEDIATEK SOFTWARE RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION,
+ *     TO REVISE OR REPLACE THE MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE
+ *     FEES OR SERVICE CHARGE PAID BY BUYER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
+ *
+ *     THE TRANSACTION CONTEMPLATED HEREUNDER SHALL BE CONSTRUED IN ACCORDANCE WITH THE LAWS
+ *     OF THE STATE OF CALIFORNIA, USA, EXCLUDING ITS CONFLICT OF LAWS PRINCIPLES.
+ ************************************************************************************************/
+/* FILE NAME:  c_bt_mw_a2dp_common.h
+ * PURPOSE:
+ *  {1. What is covered in this file - function and scope.}
+ *  {2. Related documents or hardware information}
+ * NOTES:
+ *  {Something must be known or noticed}
+ *  {1. How to use these functions - Give an example.}
+ *  {2. Sequence of messages if applicable.}
+ *  {3. Any design limitation}
+ *  {4. Any performance limitation}
+ *  {5. Is it a reusable component}
+ *
+ *
+ *
+ */
+/* INCLUDE FILE DECLARATIONS
+ */
+/* NAMING CONSTANT DECLARATIONS
+ */
+/* MACRO FUNCTION DECLARATIONS
+ */
+/* DATA TYPE DECLARATIONS
+ */
+/* GLOBAL VARIABLE DECLARATIONS
+ */
+/* LOCAL SUBPROGRAM DECLARATIONS
+ */
+/* STATIC VARIABLE DECLARATIONS
+ */
+/* EXPORTED SUBPROGRAM BODIES
+ */
+/* LOCAL SUBPROGRAM BODIES
+ */
+
+#ifndef __C_BT_MW_A2DP_COMMON_H__
+#define __C_BT_MW_A2DP_COMMON_H__
+
+INT32 c_btm_source_sink_on_off(BOOL fg_src_on, BOOL fg_sink_on);
+BT_A2DP_ROLE c_btm_get_a2dp_role(VOID);
+INT32 c_btm_connect_audio_sources(char *addr, audio_conn_type_t type);
+INT32 c_btm_bt_disconnect_audio_sources(char *addr, audio_conn_type_t type);
+
+/* return value is TRUE: stream suspend, FALSE: stream start */
+BOOL c_btm_stream_is_suspend(VOID);
+
+#endif /* __C_BT_MW_A2DP_COMMON_H__ */
+

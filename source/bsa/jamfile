@@ -1,0 +1,26 @@
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = hisense bluetooth ;
+NAME = hibluetooth ;
+VERSION = 0.0.1 ;
+TYPE = none ;
+
+if $(BUILDENV_DEVICE_VENDOR) = hisi {
+
+    SYSINCDIRS += ${BUILDENV_PROJECT_DIR}/oss/bsa/include/inc/config ;
+
+    PUBINCFOLDERS = inc ;
+
+    LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+    PUBLIBS += [ glob $(LIBFOLDER)/lib* ] ;
+
+    DISTFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-bin" ;
+    DISTFILES = btmw-test ;
+    CPFILES $(DISTFOLDER)"/"$(DISTFILES) : "loewe/bin" ;
+
+    CPDIRS  bluetooth               : boot/varlocal/ ;
+}
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

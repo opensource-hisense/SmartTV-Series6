@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = libsqlite3 ;
+NAME = libsqlite ;
+VERSION = 3.7.17 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBINCDIRS = include ;
+PUBLIBS = [ glob $(LIBFOLDER:E="")"/*.*" ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

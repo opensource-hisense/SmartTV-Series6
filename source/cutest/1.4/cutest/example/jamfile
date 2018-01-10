@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# 
+# C Unit Test example  
+# 
+# ## Module settings ###
+LONGNAME = example ;
+NAME = example ;
+VERSION = 0.1.0 ;
+TYPE = exe ;
+
+LIBS = cutest ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

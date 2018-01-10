@@ -1,0 +1,13 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+LONGNAME = "rapidjson" ;
+NAME = rapidjson ;
+VERSION = 1.0.2 ;
+TYPE = none ;
+
+PUBINCDIRS = include ;
+
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

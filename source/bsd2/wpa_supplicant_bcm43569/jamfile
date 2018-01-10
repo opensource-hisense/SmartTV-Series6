@@ -1,0 +1,21 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "WPA Supplicant Binary and Communication Lib" ;
+NAME = wpa_supplicant ;
+VERSION = 1.0.1 ;
+TYPE = none ;
+
+PUBINCFOLDERS = wireless ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+PUBLIBS += [ glob $(LIBFOLDER)/lib* ] ;
+
+# copy Binaries
+DISTFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-bin" ;
+DISTFILES = wpa_cli wpa_passphrase wpa_supplicant ;
+CPFILES $(DISTFOLDER)"/"$(DISTFILES) : "loewe/bin" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

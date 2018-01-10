@@ -1,0 +1,17 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = "giflib image library" ;
+NAME = libgif ;
+VERSION = 0.5 ;
+TYPE = none ;
+
+PUBINCFOLDERS = . ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBLIBS = $(LIBFOLDER:E="")"/libgif.so" ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;

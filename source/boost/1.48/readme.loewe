@@ -1,0 +1,21 @@
+How to build boost libraries
+
+unzip the boost archive
+
+add to user-config.jam file:
+
+using gcc : sh4 : sh4-linux-g++ ;
+
+build bjam with:
+
+./bootstrap.sh --prefix=<installdir>
+
+build libraries with:
+
+./bjam threading=multi link=shared toolset="gcc-sh4" install
+
+and for iA32
+
+./bjam threading=multi link=shared toolset="gcc" install
+
+

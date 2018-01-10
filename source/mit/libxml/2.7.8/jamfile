@@ -1,0 +1,16 @@
+##+++ BJAM module configuration +++##
+include $(BUILDENV)"/common/config.jam" ;
+
+# Module Configuration
+LONGNAME = libxml2 ;
+NAME = libxml2 ;
+VERSION = 2.7.8 ;
+TYPE = none ;
+
+LIBFOLDER = $(TARGET_MACHINE:E="")"-"$(TARGET_OS:E="")"-lib" ;
+
+PUBINCFOLDERS = . ;
+PUBLIBS = [ glob $(LIBFOLDER:E="")"/*.*" ] ;
+
+##--- BJAM module configuration ---##
+include $(BUILDENV)"/common/targets.jam" ;
