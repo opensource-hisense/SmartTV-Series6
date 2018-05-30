@@ -1,0 +1,31 @@
+make[1]: Entering directory `/data/yuchunyu/DBMaster/device/mstar/tegra/kernel/tegra'
+  HOSTCC  scripts/basic/fixdep
+./mpatch_gen.sh
+ConfigName=mpatch.config HeaderName=mpatch_macro.h KconfigName=mpatch_Kconfig DocPath=mstar2/mpatch/doc/
+Process mpatch Done...
+./gen_cl.sh
+  HOSTCC  scripts/kconfig/conf.o
+  HOSTCC  scripts/kconfig/zconf.tab.o
+  HOSTLD  scripts/kconfig/conf
+*** Default configuration is based on 'mstar_config'
+drivers/mstar2/drv/emac/Kconfig:30:warning: defaults for choice values not supported
+drivers/mstar2/drv/emac/Kconfig:36:warning: defaults for choice values not supported
+drivers/mstar2/drv/emac/Kconfig:91:warning: defaults for choice values not supported
+drivers/mstar2/drv/emac/Kconfig:97:warning: defaults for choice values not supported
+drivers/mstar2/drv/emac/Kconfig:103:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:30:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:36:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:91:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:97:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:103:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:147:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:161:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:183:warning: defaults for choice values not supported
+drivers/mstar2/drv/gmac/Kconfig:189:warning: defaults for choice values not supported
+drivers/pci/pcie/Kconfig:64:warning: choice value used outside its choice group
+drivers/pci/pcie/Kconfig:70:warning: choice value used outside its choice group
+drivers/pci/pcie/Kconfig:77:warning: choice value used outside its choice group
+#
+# configuration written to .config
+#
+make[1]: Leaving directory `/data/yuchunyu/DBMaster/device/mstar/tegra/kernel/tegra'

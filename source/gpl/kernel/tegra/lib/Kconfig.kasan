@@ -1,0 +1,76 @@
+config HAVE_ARCH_KASAN
+	bool
+
+config Kasan_Switch_On
+
+tristate "Kasan"
+
+help
+    MStar Kasan driver function
+
+if HAVE_ARCH_KASAN
+
+config KASAN
+	bool "KASan: runtime memory debugger"
+	depends on SLUB_DEBUG
+	select CONSTRUCTORS
+	help
+	  Enables kernel address sanitizer - runtime memory debugger,
+	  designed to find out-of-bounds accesses and use-after-free bugs.
+	  This is strictly debugging feature. It consumes about 1/8
+	  of available memory and brings about ~x3 performance slowdown.
+	  For better error detection enable CONFIG_STACKTRACE,
+	  and add slub_debug=U to boot cmdline.
+
+config KASAN_SHADOW_OFFSET
+	hex
+	default 0xb0a00000 if ARM && ARCH_LG1K
+	default 0xd8000000 if ARM
+	help
+	  KASAN_SHADOW_OFFSET + (ADDRESSABLE_KERNEL_ADDR / 8) =
+	  SHADOW_MEMORY_ADDR.
+	  In ARM64, Address where we want to place a shadow memory is
+	  0xffffff8000000000 and addressable kernel address is
+	  0xffffff8000000000. So, KASAN_SHADOW_OFFSET should be
+	  0xdfffff9000000000.
+	  In ARM, shadow memory address where we want to place is
+	  0xb6e00000 and addressable kernel address is 0xbf000000. So,
+	  KASAN_SHADOW_OFFSET is 0x9f000000.
+	  In LGE DTV SoCs based on ARM, shadow memory address where we
+	  want to place the shadow memory is 0xc0800000, and addressable
+	  kernel address is 0x7f000000. So, KASAN_SHADOW_OFFSET is
+	  0xb0a00000.
+
+choice
+	prompt "Instrumentation type"
+	depends on KASAN
+	default KASAN_OUTLINE
+
+config KASAN_OUTLINE
+	bool "Outline instrumentation"
+	help
+	  Before every memory access compiler insert function call
+	  __asan_load*/__asan_store*. These functions performs check
+	  of shadow memory. This is slower than inline instrumentation,
+	  however it doesn't bloat size of kernel's .text section so
+	  much as inline does.
+
+config KASAN_INLINE
+	bool "Inline instrumentation"
+	help
+	  Compiler directly inserts code checking shadow memory before
+	  memory accesses. This is faster than outline (in some workloads
+	  it gives about x2 boost over outline instrumentation), but
+	  make kernel's .text size much bigger.
+
+endchoice
+
+config TEST_KASAN
+	tristate "Module for testing kasan for bug detection"
+	depends on m && KASAN
+	help
+	  This is a test module doing various nasty things like
+	  out of bounds accesses, use after free. It is useful for testing
+	  kernel debugging features like kernel address sanitizer.
+
+endif

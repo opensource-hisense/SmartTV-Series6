@@ -1,0 +1,146 @@
+/dts-v1/;
+
+/ {
+	model = "K6";
+	compatible = "arm,foundation-aarch64", "arm,k6";
+	interrupt-parent = <0x1>;
+	#address-cells = <0x2>;
+	#size-cells = <0x2>;
+
+	chosen {
+		bootargs = "root=/dev/mmcblk0p2 rootfstype=ext4 rw init=/init console=ttyS0,115200 LX_MEM=0x05400000 GMAC_MEM=0x25600000,0x00100000 DRAM_LEN=0x40000000 LX_MEM2=0x3EC00000,0x21400000 LX_MEM3=0xD1C00000,0x0E400000 CORE_DUMP_PATH=/application/core_dump.%%p.gz cma=0xAC00000 CMA0=ion_vdec_heap,miu=0,hid=19,sz=0x7c00000 CMA1=ion_vdec_mfe,miu=0,hid=20,sz=0x3000000 ENV_VAR_OFFSET=0x3E0000 ENV_VAR_SIZE=0x10000 ENV=SERIAL SECURITY=OFF";
+	};
+
+	cpus {
+		#address-cells = <0x2>;
+		#size-cells = <0x0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x0>;
+			enable-method = "mstar-spin-table";
+			cpu-release-addr = <0x0 0x100510>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x1>;
+			enable-method = "mstar-spin-table";
+			cpu-release-addr = <0x0 0x100510>;
+		};
+	};
+
+	memory@20200000 {
+		device_type = "memory";
+		reg = <0x0 0x20200000 0x0 0x5400000>;
+	};
+
+	memory@38C00000 {
+		device_type = "memory";
+		reg = <0x0 0x3ec00000 0x0 0x21400000>;
+	};
+
+	memory@A0000000 {
+		device_type = "memory";
+		reg = <0x0 0xd1c00000 0x0 0xe400000>;
+	};
+
+	interrupt-controller@16001000 {
+		compatible = "arm,cortex-a15-gic", "arm,cortex-a9-gic";
+		#interrupt-cells = <0x3>;
+		#address-cells = <0x0>;
+		interrupt-controller;
+		reg = <0x0 0x16001000 0x0 0x1000 0x0 0x16002000 0x0 0x4000>;
+		interrupts = <0x1 0x9 0xf04>;
+		linux,phandle = <0x1>;
+		phandle = <0x1>;
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <0x1 0xd 0xff01 0x1 0xe 0xff01 0x1 0xb 0xff01 0x1 0xa 0xff01>;
+		clock-frequency = <0xb71b00>;
+	};
+
+	pmu {
+		compatible = "arm,armv8-pmuv3";
+		interrupts = <0x0 0x3c 0x4 0x0 0x3d 0x4 0x0 0x3e 0x4 0x0 0x3f 0x4>;
+	};
+	emac {
+		compatible = "mstar-emac";
+	};
+
+	gmac {
+		compatible = "mstar-gmac";
+	};
+
+        ir {
+	        compatible = "mstar-ir";
+	};
+
+	mbx {
+	        compatible = "mstar-mbx";
+	};
+
+	xc {
+		compatible = "mstar-xc";
+	};
+
+	gflip {
+		compatible = "mstar-gflip";
+	};
+
+	alsa {
+		compatible = "Mstar-alsa";
+	};
+
+	rtc {
+	        compatible = "mstar-rtc";
+	};
+
+	gpio {
+        compatible = "mstar-gpio";
+	};
+
+	Mstar-ehci-1 {
+		compatible = "Mstar-ehci-1";
+		interrupts = <0x0 0xa7 0x0>;
+	};
+
+	Mstar-ehci-2 {
+		compatible = "Mstar-ehci-2";
+		interrupts = <0x0 0xc2 0x0>;
+	};
+
+	Mstar-ehci-3 {
+		compatible = "Mstar-ehci-3";
+		interrupts = <0x0 0x137 0x0>;
+	};
+
+	Mstar-ehci-4 {
+		compatible = "Mstar-ehci-4";
+		interrupts = <0x0 0x135 0x0>;
+	};
+
+	Mstar-ehci-5 {
+		compatible = "Mstar-ehci-5";
+		interrupts = <0x0 0x133 0x0>;
+	};
+
+        Mstar-xhci-1 {
+                compatible = "Mstar-xhci-1";
+		interrupts = <0x0 0x131 0x0>;
+        };
+
+        Mstar-udc {
+                compatible = "Mstar-udc";
+                interrupts = <0x0 0xc5 0x0>;
+        };
+
+        Mstar-otg {
+                compatible = "Mstar-otg";
+                interrupts = <0x0 0xa6 0x0>, <0x0 0xa7 0x0>;
+        };
+};

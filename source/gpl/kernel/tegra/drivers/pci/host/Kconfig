@@ -1,0 +1,21 @@
+#
+# PCIE Host Controller Drivers
+#
+comment "PCIE Host Controller Drivers"
+
+config PCI_TEGRA
+        bool "NVIDIA Tegra PCIe controller"
+        select PCI
+        select TEGRA_USB_SHARED_PAD
+        depends on ARCH_TEGRA_HAS_PCIE
+        help
+          Adds PCIe Host controller driver for tegra based systems
+
+config MSTAR_PCIE
+	tristate "MSTAR_PCIE"
+	depends on PCI
+	help
+	  Say Y here if you want the MStar PCIe host core. Select this if you are having a
+	  problem with PCI support and want to see more of what is going on.
+
+	  When in doubt, say N.

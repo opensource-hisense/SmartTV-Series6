@@ -1,0 +1,17 @@
+kernel/net/ipv4/ip_tunnel.ko
+kernel/net/ipv4/tunnel4.ko
+kernel/net/ipv4/tcp_cubic.ko
+kernel/net/ipv4/netfilter/nf_conntrack_ipv4.ko
+kernel/net/ipv4/netfilter/nf_defrag_ipv4.ko
+kernel/net/ipv4/netfilter/ip_tables.ko
+kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/sit.ko
+kernel/net/ipv6/inet6_hashtables.ko
+kernel/net/netfilter/nfnetlink.ko
+kernel/net/netfilter/nfnetlink_log.ko
+kernel/net/netfilter/nf_conntrack.ko
+kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_tcpudp.ko
+kernel/net/packet/af_packet.ko
+kernel/net/sunrpc/sunrpc.ko
+kernel/net/unix/unix.ko

@@ -1,0 +1,2 @@
+kernel/sound/soundcore.ko
+kernel/sound/core/snd.ko

@@ -1,0 +1,2 @@
+kernel/drivers/smaf/smaf-core.ko
+kernel/drivers/smaf/smaf-pa.ko
