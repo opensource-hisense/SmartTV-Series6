@@ -1,0 +1,130 @@
+#!/bin/sh
+# Simple regression test suite for gphoto2
+# Dan Fandrich
+
+# we expect english text... 
+export LANG=C
+export LANGUAGE=C
+
+if [ "$1" = "-v" ] ; then
+	shift
+	VERBOSECOMMAND='set -x ;'
+fi
+
+test -z "$srcdir" && srcdir=`pwd`
+
+DATADIR="$srcdir/data"
+if [ ! -e "$DATADIR" ] ; then
+	echo Must run tests from the tests directory
+	exit 1
+fi
+
+STAGINGDIR="$srcdir/staging"
+chmod u+w "$STAGINGDIR"/*.{png,wav,jpg}
+chmod u+w "$STAGINGDIR"/subdir1/*.png
+LOGDIR="`pwd`/log"
+if [ -e "$LOGDIR" ] ; then
+	rm -fr "$LOGDIR/"test*
+else
+	mkdir "$LOGDIR"
+fi
+
+
+if [ -n "$1" ] ; then
+	TESTLIST="$@"
+else
+	TESTLIST="$DATADIR"/*.param
+fi
+
+POSTCOMMAND=
+# Clean up on test abort
+trap 'eval $POSTCOMMAND; exit 1' SIGINT SIGHUP SIGTERM
+
+FAILEDTESTS=0
+
+for TEST in $TESTLIST ; do
+  echo ''
+
+  # These variables are unlikely to be needed in the test parameters file
+  TESTNAME=`echo $TEST | sed -e 's@^.*data/@@' -e 's/\..*$//'`
+  RESULTFILE="$DATADIR/$TESTNAME.result"
+
+  # Initialize variables that can be used within the test parameters file
+  test -z "$PROGRAM" && PROGRAM=../gphoto2/gphoto2
+  OUTFILE="$LOGDIR/$TESTNAME.out"
+  ERRFILE="$LOGDIR/$TESTNAME.err"
+
+  # Initialize variables that must be set for each test
+  TITLE=
+  COMMAND=
+  PRECOMMAND=
+  POSTCOMMAND=
+  SEDCOMMAND=
+  RESULTCODE=0
+
+  # Load the test parameters, which can override the above
+  if [ ! -e "$TEST" ] ; then
+  	echo "Test $TESTNAME FAILED: invalid test parameter file $TEST"
+  	FAILEDTESTS=$(($FAILEDTESTS + 1))
+  	continue
+  fi
+  . "$TEST"
+
+  echo '***' Running \"$TITLE\" test
+
+  # Run a pre-test command
+  if ! eval $PRECOMMAND ; then
+	echo Test $TESTNAME FAILED: pre test command failure
+	FAILEDTESTS=$(($FAILEDTESTS + 1))
+	# Unconditionally run post command to clean up
+	eval $POSTCOMMAND
+  	continue
+  fi
+
+  #eval echo `echo "$COMMAND" | sed -e 's/>/\\\\>/g' -e "s/'/\\\\'/g" -e 's/\"/\\\\"/g'`
+  eval $VERBOSECOMMAND $COMMAND
+  EXITCODE=$?
+  set +x
+  if [ $EXITCODE -ne "$RESULTCODE" ] ; then
+  	echo "Test $TESTNAME FAILED: got exit $EXITCODE, expected $RESULTCODE"
+	# Don't abort now--run the post-test command to clean up first
+	FAILEDTESTS=$(($FAILEDTESTS + 1))
+	test -n "$VERBOSECOMMAND" && cat "$ERRFILE"
+  fi
+
+  # Run a post-test command
+  if ! eval $POSTCOMMAND ; then
+	echo Test $TESTNAME FAILED: post test command failure
+	FAILEDTESTS=$(($FAILEDTESTS + 1))
+  	continue
+  fi
+
+  if  [ $EXITCODE -ne "$RESULTCODE" ] ; then
+	# Delayed exit
+	continue
+  fi
+
+  if [ -n "$SEDCOMMAND" ] ; then
+	mv -f "$OUTFILE" "$OUTFILE".orig
+	sed "$SEDCOMMAND" < "$OUTFILE.orig" > "$OUTFILE"
+  fi
+
+  if ! cmp "$RESULTFILE" "$OUTFILE" >/dev/null ; then
+  	echo Test $TESTNAME FAILED: unexpected output
+	test -n "$VERBOSECOMMAND" && diff -u "$RESULTFILE" "$OUTFILE"
+	FAILEDTESTS=$(($FAILEDTESTS + 1))
+  	continue
+  fi
+
+  echo Test $TESTNAME PASSED
+done
+
+echo ''
+if [ $FAILEDTESTS -eq 0 ] ; then
+  echo All tests have PASSED
+else
+  echo "$FAILEDTESTS test(s) have FAILED"
+fi
+
+# Set the exit code
+test "$FAILEDTESTS" -eq 0

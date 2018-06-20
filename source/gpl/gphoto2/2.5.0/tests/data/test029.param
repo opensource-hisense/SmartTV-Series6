@@ -1,0 +1,3 @@
+TITLE='Invalid camera'
+COMMAND='$PROGRAM --camera="Xyzzy Foo camera" --abilities 2> "$OUTFILE" > /dev/null'
+RESULTCODE=1

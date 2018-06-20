@@ -1,0 +1,10 @@
+2007-05-23  Marcus Meissner  <marcus@jet.franken.de>
+
+	* main.c: Removed.
+	* library.c: Reworked Bayer array decoding.
+	   Use global bayer routines.
+
+	* library.c, barbie.c: Largish clean up.
+
+	* library.c,barbie.h: Merged into barbie.c
+	* Protocol.txt: Extracted from barbie.h

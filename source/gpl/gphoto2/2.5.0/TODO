@@ -1,0 +1,15 @@
+some orthogonalization of the options:
+
+- unify frame count handling
+
+  use --frames / -F  for both controlled capture and waitevents?
+
+- download or not download flag
+
+  introduce --download / --no-download flag?
+  both for --capture-image and --wait-event
+
+
+- --list-ids
+
+  to list USB ids

@@ -1,0 +1,128 @@
+2007-01-24  Marcus Meissner  <marcus@jet.franken.de>
+
+	* gphotofs.c: Rev down to fuse 2.5 requirement,
+	  inject -s instead.
+
+	* configure.ac: 2.3.0.trunk.5
+
+2007-01-21  Marcus Meissner  <marcus@jet.franken.de>
+
+	* gphotofs.c:
+	  - Use single threaded loop (libgphoto2 cannot cope
+	    being accessed multithread currently).
+
+	  - Needed to use fuse version 2.6 for this (all
+	    others fail one way or the other).
+
+	  - basic statfs support.
+
+	  - charset is always utf-8, because thats what the kernel uses.
+
+2007-01-14  Marcus Meissner  <marcus@jet.franken.de>
+
+	* gphotofs.c: Fixed the bugs in the upload code.
+	  
+	  Upload is working now (needs latest libgphoto2 SVN
+	  trunk for working PTP2 driver).
+
+2007-01-14  Philip Langdale  <philipl@alumni.utexas.net>
+
+	(merged by Marcus)
+	* gphotofs.c: Merged the write code.
+
+2007-01-10  Philip Langdale  <philipl@alumni.utexas.net>
+
+	(merged by Marcus)
+	* gphotofs.c: added rmdir/mkdir from write branch.
+
+2006-09-03  Philip Langdale  <philipl@alumni.utexas.net>
+
+	* AUTHORS
+	* README
+	* configure.ac: Update for the 0.3 release and
+	make sure my contact information is accurate.
+
+2006-09-03  Philip Langdale  <philipl@alumni.utexas.net>
+
+	* gphotofs.c: (gphotofs_init).
+	Fix --model to actually work. I needed to load
+	the abilities list before it would be useful...
+
+2006-05-27  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* README: Fix a typo and test svn commit.
+
+2006-01-29  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c: (main) (gphotofs_init).
+	Implement --port support.
+
+2006-01-12  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c: (main) (gphotofs_init).
+	Start adding support for relevant command line options.
+	--speed and --model have been implemented while --port
+	and --usbid are pending.
+
+2006-01-12  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* po/POTFILES.in: Add this in preparation for
+	localisation support.
+
+2006-01-04  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* configure.ac
+	* NEWS: 0.2 Release
+
+2006-01-01  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c:
+	(gpresultToErrno). Add the result codes from
+	gphoto2-port-result.h
+	(gphotofs_readdir). Fix rampant memory leak
+	where the file list wasn't being freed.
+	(gphotofs_read). Report errors.
+	(gphotofs_release). Made a little more robust.
+
+2005-12-30  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c: (gphotofs_readdir) (gphotofs_getattr).
+	Set the uid and gid of files to match those of the
+	process. This is cosmetic as real access control is
+	provided by the allow_other or allow_root options.
+
+2005-12-29  Philip Langdale  <philipl@mail.utexas.edu>
+
+        * configure.ac
+        * Makefile.am
+        * NEWS
+        * README: 0.1 Release
+
+2005-12-29  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c: (gphotofs_unlink). Test the result
+	of the delete operation correctly.
+
+2005-12-29  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* gphotofs.c: Lots of stuff.
+	- (struct OpenFile) (freeOpenFile) (gphotofs_open)
+	  (gphotofs_release). Add a count for open files so
+	  that they aren't closed too early.
+	- (gpresultToErrno). Map libgphoto2 errors to errnos,
+	  or at least try to. Prevents things going off the
+	  deepend if there is an error.
+        - (gphotofs_getattr). Don't go into an infinite loop
+          if called for a non-existent file.
+        - (gphotofs_readdir). Set the block count for files.
+          This allows du to report a meaningful result.
+
+2005-12-29  Philip Langdale  <philipl@mail.utexas.edu>
+
+	A autogen.sh
+	* configure.ac: Bump version to 0.0.99 for cvs.
+	Checking in to gphoto cvs.
+
+2005-12-28  Philip Langdale  <philipl@mail.utexas.edu>
+
+	* Initial 0.0 Release.

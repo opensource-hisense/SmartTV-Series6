@@ -1,0 +1,20 @@
+# Note: As this file is sitting in ${top_builddir},
+#           ${top_builddir} ~= ${pcfiledir}
+#	and ${top_srcdir}   ~= ${pcfiledir}/@srcdir@
+# Note: This referes to directory matches, not to string matches.
+# Note: ${pcfiledir} already is an absolute path name, so there is
+#       no much sense prepending a ${pc_top_builddir} before it.
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+VERSION=@VERSION@
+driverdir=@camlibdir@
+
+Name: libgphoto2_port
+Description: Library for easy access to digital cameras
+URL: http://gphoto.org/proj/libgphoto2/
+Version: @VERSION@
+Requires: libusb >= 0.1.11
+Libs: ${pcfiledir}/libgphoto2_port/libgphoto2_port.la -lm
+Cflags: -I${pcfiledir}/@srcdir@

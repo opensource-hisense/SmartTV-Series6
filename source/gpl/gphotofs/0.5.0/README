@@ -1,0 +1,97 @@
+GPhotoFS
+--------
+
+GPhotoFS is a filesystem client based on libgphoto2 that exposes 
+supported cameras as filesystems; while some cameras implement the
+USB Mass Storage class and already appear as filesystems (making
+this program redundant), many use the Picture Transfer Protocol (PTP)
+or some other custom protocol. But as long as the camera is supported
+by libgphoto2, it can be mounted as a filesystem using this program.
+
+As libgphoto2 is a userspace library for interacting with cameras,
+it is natural that if one is to build a filesystem ontop of it, one
+should use FUSE, and that is what I have done.
+
+Getting it
+----------
+
+Releases are available at:
+
+   http://www.gphoto.org/
+
+and the current source is available in the gphoto project's svn
+repository:
+
+   http://sourceforge.net/projects/gphoto
+
+Requirements
+------------
+
+FUSE >= 2.2
+GLib >= 2.6
+libgphoto2 >= 2.1 (Maybe one can go further back but I haven't tried).
+
+How to mount a filesystem
+-------------------------
+
+GPhotoFS implements the same model/port/speed command line
+options that gphoto2 does, so you can use them to fine tune your
+choice of camera - but for most people, the autodetection will
+Just Work(tm) -  all you do is run it and give it a mount point.
+
+(The --usbid option is not yet supported, but will be eventually).
+
+So, just do:
+
+   gphotofs <mountpoint>
+
+and when you're finished, you can unmount with:
+
+   fusermount -u <mountpoint>
+
+Usage
+-----
+
+As you'd expect, once you've mounted the camera, you can interact
+with it like a filesystem, though with limitations.
+
+You can:
+- Traverse directories
+- Read the contents of files
+- Delete files
+- Move files (Read + delete)
+- Use 'du' to measure file size
+- Mount the filesystem before plugging in a camera.
+- Add/Remove directories
+- Add (upload) files.
+- Get free space information
+  - This one seems to be very much at the mercy of the camera
+    manufacturer. I don't know if it'll ever be possible in a
+    general way.
+  (Depends on gp_camera_get_storageinfo()).
+
+You cannot:
+- Modify files still has some problems.
+- Rename files/directories
+- Unplug and replug a camera and expect things to keep working.
+  - The backend gets confused and you'll just get errors when
+    you try to do anything. Unmount and remount the filesystem
+    and you'll be back in business.
+
+Acknowledgements
+----------------
+
+Christopher Lester wrote a FUSE filesystem that is built on top of the
+gphoto2 command line utility rather than libgphoto2. As he indicated he 
+was not inclined to move it over to the library, and as I wanted to have
+a go at writing a FUSE filesystem, I went ahead and did it. For the time
+being, his one is more featureful, but has problems compiling with the
+latest release of FUSE and is self-admittedly slow.
+
+http://www.hep.phy.cam.ac.uk/~lester/gphoto2-fuse-fs/
+
+Contact info
+------------
+
+Philip Langdale <philipl@alumni.utexas.net>
+Marcus Meissner <marcus@jet.franken.de>

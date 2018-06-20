@@ -1,0 +1,45 @@
+What's new in 0.5
+-----------------
+
+- ported to work with new libgphoto2 2.5.0 and later
+
+What's new in 0.4
+-----------------
+
+- Statfs support
+- FUSE 2.6 API
+- Single threaded main loop
+- Write support
+- mkdir/rmdir
+
+
+What's new in 0.3
+-----------------
+
+- Command line options to select a specific camera, like gphoto2.
+
+What's new in 0.2
+-----------------
+
+- Fixed a big memory leak that happened whenever a directory
+  was listed.
+- Report libgphoto2_port errors.
+- Set UID and GID to match the user who ran gphotofs.
+  - This is cosmetic. The allow_root and allow_other fuse options
+    are what really control access.
+
+What's new in 0.1
+-----------------
+
+* First respectable release.
+  - Notices libgphoto2 errors and tries to map them to errnos.
+  - Doesn't go into an infinite loop when attempting to stat a
+    nonexistent file.
+
+What's new in 0.0
+------------------
+
+* Initial release
+  - Can view directory structure and read files off one camera.
+    (I have no idea how it will act will multiple cameras plugged in.)
+  - Can delete files.
